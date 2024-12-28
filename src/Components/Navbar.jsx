@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import logo from "../assets/logo.png"
 
 export default function Navbar() {
 const navigate = useNavigate()
@@ -67,7 +68,11 @@ const handleLogout =()=>{
               {links}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+          <img className="h-10" src={logo} alt="" />
+          <NavLink to="/" className="btn btn-ghost text-xl">Study Buddy</NavLink>
+          
+
+        
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
