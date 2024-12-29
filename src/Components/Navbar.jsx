@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import logo from "../assets/logo.png"
@@ -8,6 +8,16 @@ const navigate = useNavigate()
 
   const { user, logOut } = useContext(AuthContext);
 console.log(user)
+
+const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+useEffect(() => {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+}, [theme]);
+
+const toggleTheme = () => {
+  setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+};
 
 const handleLogout =()=>{
   logOut();
@@ -69,7 +79,7 @@ const handleLogout =()=>{
             </ul>
           </div>
           <img className="h-10" src={logo} alt="" />
-          <NavLink to="/" className="btn btn-ghost text-xl">Study Buddy</NavLink>
+          <NavLink to="/" className="btn btn-ghost text-xl text-blue-500">Study Buddy</NavLink>
           
 
         
@@ -78,6 +88,10 @@ const handleLogout =()=>{
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
+        
+        <button onClick={toggleTheme} className="btn btn-sm btn-outline btn-info mr-2">
+          {theme === "light" ? "Dark" : "Light"}
+        </button>
           {user ? (
             <div className="flex gap-2 items-center">
               

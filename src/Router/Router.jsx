@@ -10,63 +10,89 @@ import UpdateAssignment from "../pages/updateAssignment/UpdateAssignment";
 import ViewAssignment from "../pages/viewAssignment/ViewAssignment";
 import PendingAssignments from "../pages/pendingAssignments/PendingAssignments";
 import AssignmentSubmission from "../pages/assignmentSubmission/AssignmentSubmission";
-
+import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../pages/error/Error";
 
 const router = createBrowserRouter([
-    {
-        path:"/",
-        element:<MainLayout></MainLayout>,
-        errorElement:<h2>Route not found</h2>,
-        children: [
-            {
-                path:"/",
-                element:<Home></Home>
-            },
-            {
-                path:"/login",
-                element: <Login></Login>
-            },
-            {
-                path: "/register",
-                element: <Register></Register>
-            },
-            {
-                path:"/myAttemptedAssignments",
-                element: <MyAttemptedAssignments></MyAttemptedAssignments>
-            },
-            {
-                path: "/createAssignments",
-                element:<CreateAssignments></CreateAssignments>
-            },
-            {
-                path: "/assignments",
-                element: <Assignments></Assignments>,
-                loader:()=>fetch("http://localhost:5000/allAssignments")
-            },
-            {
-                path:"/updateAssignment/:id",
-                element:<UpdateAssignment></UpdateAssignment>,
-                loader:({params})=>fetch(`http://localhost:5000/assignment/${params.id}`)
-            },
-            {
-                path:"/viewAssignment/:id",
-                element:<ViewAssignment></ViewAssignment>,
-                loader:({params})=>fetch(`http://localhost:5000/assignment/${params.id}`)
-
-            },
-            {
-                path:"/pendingAssignments",
-                element: <PendingAssignments></PendingAssignments>,
-                loader:()=>fetch("http://localhost:5000/assignments/pending")
-            },
-            {
-                path:"/assignmentSubmission/:id",
-                element:<AssignmentSubmission></AssignmentSubmission>,
-                loader:({params})=>fetch(`http://localhost:5000/assignment/${params.id}`)
-            }
-            
-        ]
-    }
-])
+  {
+    path: "/",
+    element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/myAttemptedAssignments",
+        element: (
+          <PrivateRoute>
+            <MyAttemptedAssignments></MyAttemptedAssignments>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/createAssignments",
+        element: (
+          <PrivateRoute>
+            <CreateAssignments></CreateAssignments>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/assignments",
+        element: <Assignments></Assignments>,
+        loader: () => fetch("http://localhost:5000/allAssignments"),
+      },
+      {
+        path: "/updateAssignment/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateAssignment></UpdateAssignment>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/assignment/${params.id}`),
+      },
+      {
+        path: "/viewAssignment/:id",
+        element: (
+          <PrivateRoute>
+            <ViewAssignment></ViewAssignment>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/assignment/${params.id}`),
+      },
+      {
+        path: "/pendingAssignments",
+        element: (
+          <PrivateRoute>
+            <PendingAssignments></PendingAssignments>
+          </PrivateRoute>
+        ),
+        loader: () => fetch("http://localhost:5000/assignments/pending"),
+      },
+      {
+        path: "/assignmentSubmission/:id",
+        element: (
+          <PendingAssignments>
+            <AssignmentSubmission></AssignmentSubmission>
+          </PendingAssignments>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/assignment/${params.id}`),
+      },
+    ],
+  },
+]);
 
 export default router;

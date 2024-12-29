@@ -10,6 +10,8 @@ export default function Assignments() {
 
   const loaderAssignments = useLoaderData();
   const [allAssignments, setAllAssignments] = useState(loaderAssignments);
+  const [difficultyFilter, setDifficultyFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleView = (id) => {
     navigate(`/viewAssignment/${id}`);
@@ -74,19 +76,57 @@ export default function Assignments() {
     });
   };
 
+  const handleFilterChange = (event) => {
+    setDifficultyFilter(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredAssignments = allAssignments.filter((assignment) => {
+    const matchesDifficulty =
+      difficultyFilter === "" || assignment.difficulty === difficultyFilter;
+    const matchesSearchQuery =
+      assignment.title.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesDifficulty && matchesSearchQuery;
+  });
+
   return (
-    <div className=" w-11/12 md:w-4/5 my-10 mx-auto">
+    <div className="w-11/12 md:w-4/5 my-10 mx-auto">
       <h2 className="text-2xl font-semibold text-center pb-10">
         All Assignments
       </h2>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-5 gap-4">
+        <select
+          value={difficultyFilter}
+          onChange={handleFilterChange}
+          className="border rounded p-2"
+        >
+          <option value="">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search by title"
+          className="border rounded p-2"
+        />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {allAssignments.map((assignment) => {
+        {filteredAssignments.map((assignment) => {
           const date = new Date(assignment.date);
           const formattedDate = date.toLocaleDateString("en-US");
           return (
             <div
               key={assignment._id}
-              className=" rounded overflow-hidden shadow-lg bg-white"
+              className="rounded overflow-hidden shadow-lg bg-white"
             >
               {assignment.image && (
                 <img
@@ -97,7 +137,7 @@ export default function Assignments() {
               )}
               <div className="px-6 py-4">
                 <div className="">
-                  <div className="font-bold text-xl mb-2">
+                  <div className="font-bold text-xl mb-2 text-blue-500">
                     {assignment.title}
                   </div>
                   <p className="text-gray-700 text-base">
@@ -117,7 +157,7 @@ export default function Assignments() {
                 <div className="flex mt-5 gap-2">
                   <button
                     onClick={() => handleView(assignment._id)}
-                    className="bg-blue-500 text-white font-bold  h-10 px-4 rounded hover:bg-blue-600"
+                    className="bg-blue-500 text-white font-bold h-10 px-4 rounded hover:bg-blue-600"
                   >
                     View
                   </button>
@@ -133,7 +173,6 @@ export default function Assignments() {
 
                   <button
                     onClick={() => handleDelete(assignment._id)}
-                    // disabled={user?.email !== assignment?.email}
                     className={`border-2 text-red-500 border-red-500 font-bold h-10 px-4 rounded ${
                       user?.email !== assignment?.email
                         ? "opacity-50"
