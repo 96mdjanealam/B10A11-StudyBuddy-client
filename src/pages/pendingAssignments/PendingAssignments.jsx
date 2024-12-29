@@ -29,7 +29,7 @@ export default function PendingAssignments() {
       <h2 className="text-2xl font-semibold text-center pb-10">
         Pending Assignments
       </h2>
-
+      <div className='overflow-x-auto'>
       <table className="table">
     {/* head */}
     <thead>
@@ -59,6 +59,8 @@ export default function PendingAssignments() {
       
     </tbody>
   </table>
+      </div>
+      
       <ToastContainer></ToastContainer>
       </div>
   )

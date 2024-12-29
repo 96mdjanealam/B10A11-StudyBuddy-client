@@ -24,6 +24,13 @@ export default function CreateAssignments() {
     const userName = form.userName.value;
     const email = form.email.value;
 
+    if(marks<10){
+      toast.error("Input a full mark value of at least 10",{
+        position:"top-center"
+      })
+      return;
+    }
+
     console.log(
       title,
       image,

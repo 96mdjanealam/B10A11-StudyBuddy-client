@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../Provider/AuthProvider'
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 export default function MyAttemptedAssignments() {
 
@@ -8,12 +9,15 @@ export default function MyAttemptedAssignments() {
   const [assignments, setAssignments]= useState([])
 
   useEffect(()=>{
-    fetch(`http://localhost:5000/assignments-submitted?email=${user?.email}`)
-    .then(res=>res.json())
-    .then(data=>{
-      console.log(data);
-      setAssignments(data)
+
+    axios.get(`http://localhost:5000/assignments-submitted?email=${user?.email}`,{
+      withCredentials:true
     })
+    .then(res=>{
+      console.log(res.data)
+      setAssignments(res.data)
+    })
+
   },[user?.email])
 
   return (
@@ -21,8 +25,8 @@ export default function MyAttemptedAssignments() {
       <h2 className="text-2xl font-semibold text-center pb-10">
         My Submitted Assignments
       </h2>
-
-      <table className="table">
+<div className='overflow-x-auto'>
+<table className="table">
     {/* head */}
     <thead>
       <tr>
@@ -55,6 +59,8 @@ export default function MyAttemptedAssignments() {
       
     </tbody>
   </table>
+</div>
+      
       <ToastContainer></ToastContainer>
       </div>
   )

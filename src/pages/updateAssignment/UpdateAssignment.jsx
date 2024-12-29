@@ -11,8 +11,6 @@ export default function UpdateAssignment() {
 
   const oldAssignmentData = useLoaderData();
 
- 
-
   const [dueDate, setDueDate] = useState(new Date(oldAssignmentData.date));
 
   dueDate.setHours(23, 59, 59, 999);
@@ -20,12 +18,12 @@ export default function UpdateAssignment() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(user.email!==oldAssignmentData.email){
-        toast.error("Access denied!",{
-            position:"top-center"
-        })
-        return;
-      }
+    if (user.email !== oldAssignmentData.email) {
+      toast.error("Access denied!", {
+        position: "top-center",
+      });
+      return;
+    }
 
     const form = e.target;
     const title = form.title.value;
@@ -36,6 +34,13 @@ export default function UpdateAssignment() {
     const date = dueDate;
     const userName = form.userName.value;
     const email = form.email.value;
+
+    if (marks < 10) {
+      toast.error("Input a full mark value of at least 10", {
+        position: "top-center",
+      });
+      return;
+    }
 
     const updatedAssignment = {
       title,
@@ -58,14 +63,14 @@ export default function UpdateAssignment() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if(data.modifiedCount){
-            toast.success("Assignment Updated",{
-                position:"top-center"
-            })
-        }else{
-            toast.error("No changes made!",{
-                position:"top-center"
-            })
+        if (data.modifiedCount) {
+          toast.success("Assignment Updated", {
+            position: "top-center",
+          });
+        } else {
+          toast.error("No changes made!", {
+            position: "top-center",
+          });
         }
       })
       .catch((err) => {
@@ -160,7 +165,6 @@ export default function UpdateAssignment() {
               <DatePicker
                 selected={dueDate}
                 onChange={(date) => {
-                  
                   setDueDate(date);
                 }}
                 customInput={
@@ -204,9 +208,7 @@ export default function UpdateAssignment() {
             />
           </div>
 
-          <div
-          
-          className="form-control mt-6">
+          <div className="form-control mt-6">
             <button type="submit" className="btn btn-neutral">
               Update Assignment
             </button>

@@ -1,28 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { user, logOut } = useContext(AuthContext);
-console.log(user)
+  console.log(user);
 
-const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
-useEffect(() => {
-  document.documentElement.setAttribute("data-theme", theme);
-  localStorage.setItem("theme", theme);
-}, [theme]);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-const toggleTheme = () => {
-  setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-};
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  };
 
-const handleLogout =()=>{
-  logOut();
-  navigate("/");
-}
+  const handleLogout = () => {
+    logOut();
+    navigate("/");
+  };
 
   const links = (
     <>
@@ -32,9 +32,11 @@ const handleLogout =()=>{
       <li>
         <NavLink to="/assignments">Assignments</NavLink>
       </li>
-      <li>
-        <NavLink to="/pendingAssignments">Pending Assignments</NavLink>
-      </li>
+      {user && (
+        <li>
+          <NavLink to="/pendingAssignments">Pending Assignments</NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -43,7 +45,7 @@ const handleLogout =()=>{
       <li>
         <NavLink to="/createAssignments">Create Assignments</NavLink>
       </li>
-      <hr className="my-2"/>
+      <hr className="my-2" />
       <li>
         <NavLink to="/myAttemptedAssignments">My Attempted Assignments</NavLink>
       </li>
@@ -78,23 +80,29 @@ const handleLogout =()=>{
               {links}
             </ul>
           </div>
-          <img className="h-10" src={logo} alt="" />
-          <NavLink to="/" className="btn btn-ghost text-xl text-blue-500">Study Buddy</NavLink>
-          
 
-        
+          <NavLink to="/">
+            <div className="flex items-center">
+              <img className="h-10" src={logo} alt="Logo" />
+
+              <p className="text-xl font-bold hover:bg-gray-100/50 px-4 py-2 rounded-lg text-blue-500 ml-2 hidden sm:block ">
+                Study Buddy
+              </p>
+            </div>
+          </NavLink>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-        
-        <button onClick={toggleTheme} className="btn btn-sm btn-outline btn-info mr-2">
-          {theme === "light" ? "Dark" : "Light"}
-        </button>
+          <button
+            onClick={toggleTheme}
+            className="btn btn-sm btn-outline btn-info mr-2"
+          >
+            {theme === "light" ? "Dark" : "Light"}
+          </button>
           {user ? (
             <div className="flex gap-2 items-center">
-              
               <div className="dropdown">
                 <img
                   tabIndex={0}
