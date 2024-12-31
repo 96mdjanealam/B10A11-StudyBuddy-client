@@ -24,27 +24,12 @@ export default function CreateAssignments() {
     const userName = form.userName.value;
     const email = form.email.value;
 
-    if(marks<10){
-      toast.error("Input a full mark value of at least 10",{
-        position:"top-center"
-      })
+    if (marks < 10) {
+      toast.error("Input a full mark value of at least 10", {
+        position: "top-center",
+      });
       return;
     }
-
-    console.log(
-      title,
-      image,
-      description,
-      marks,
-      difficulty,
-      date,
-      userName,
-      email
-    );
-
-    console.log(typeof title, title);
-    console.log(typeof date, date);
-    console.log(typeof marks, marks);
 
     const newAssignment = {
       title,
@@ -57,7 +42,7 @@ export default function CreateAssignments() {
       email,
     };
 
-    fetch("http://localhost:5000/createAssignment", {
+    fetch("https://study-buddy-server-nu.vercel.app/createAssignment", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -65,8 +50,7 @@ export default function CreateAssignments() {
       body: JSON.stringify(newAssignment),
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then(() => {
         toast.success("Assignment Created Successfully", {
           position: "top-center",
         });

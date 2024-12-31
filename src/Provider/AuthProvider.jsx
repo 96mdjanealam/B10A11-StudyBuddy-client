@@ -65,24 +65,22 @@ export default function AuthProvider({ children }) {
         const user = { email: currentUser?.email };
 
         axios
-          .post("http://localhost:5000/jwt", user, {
+          .post("https://study-buddy-server-nu.vercel.app/jwt", user, {
             withCredentials: true,
           })
           .then((res) => {
-            console.log("login token", res.data);
             setLoading(false);
           });
       } else {
         axios
           .post(
-            "http://localhost:5000/logout",
+            "https://study-buddy-server-nu.vercel.app/logout",
             {},
             {
               withCredentials: true,
             }
           )
           .then((res) => {
-            console.log("logout", res.data);
             setLoading(false);
           });
       }

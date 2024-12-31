@@ -53,7 +53,7 @@ export default function UpdateAssignment() {
       email,
     };
 
-    fetch(`http://localhost:5000/assignment-update/${oldAssignmentData?._id}`, {
+    fetch(`https://study-buddy-server-nu.vercel.app/assignment-update/${oldAssignmentData?._id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -62,7 +62,6 @@ export default function UpdateAssignment() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount) {
           toast.success("Assignment Updated", {
             position: "top-center",
@@ -73,9 +72,7 @@ export default function UpdateAssignment() {
           });
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

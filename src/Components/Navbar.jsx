@@ -7,7 +7,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const { user, logOut } = useContext(AuthContext);
-  console.log(user);
+ 
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {

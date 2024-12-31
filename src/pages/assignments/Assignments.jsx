@@ -52,13 +52,13 @@ export default function Assignments() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("delete clicked", id);
-        fetch(`http://localhost:5000/assignment-delete/${id}`, {
+    
+        fetch(`https://study-buddy-server-nu.vercel.app/assignment-delete/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
+           
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",

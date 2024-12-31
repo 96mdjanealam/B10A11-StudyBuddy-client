@@ -37,7 +37,6 @@ export default function Register() {
     if (Object.keys(newErrors).length !== 0) {
       return;
     }
-    console.log(name, email, password, photo);
 
     createNewUser(email, password)
       .then(() => {
@@ -50,8 +49,8 @@ export default function Register() {
       })
       .then(() => {
         setTimeout(() => {
-            navigate("/");
-          }, 5000);
+          navigate("/");
+        }, 5000);
       })
       .catch((error) => {
         toast.error(error.message, {

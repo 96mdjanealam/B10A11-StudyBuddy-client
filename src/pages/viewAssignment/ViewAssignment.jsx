@@ -21,19 +21,19 @@ function ViewAssignment() {
     email,
   } = assignment;
 
-  const handleTakeAssignment=()=>{
-    if(user.email===email){
-      toast.error("Your cannot take your assignment",{
-        position:"top-center"
-      })
+  const handleTakeAssignment = () => {
+    if (user.email === email) {
+      toast.error("Your cannot take your assignment", {
+        position: "top-center",
+      });
       return;
     }
-    setIsModalOpen(true)
-  }
+    setIsModalOpen(true);
+  };
 
   const handleSubmit = (e, id) => {
     e.preventDefault();
-    console.log("submit clicked");
+
     const form = e.target;
     const submission = form.submission.value;
     const notes = form.notes.value;
@@ -47,7 +47,7 @@ function ViewAssignment() {
       submittedBy,
       nameSubmittedBy,
     };
-    fetch(`http://localhost:5000/assignment-submit/${id}`, {
+    fetch(`https://study-buddy-server-nu.vercel.app/assignment-submit/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -56,12 +56,10 @@ function ViewAssignment() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setIsModalOpen(false);
-        toast.success("Assignment Submitted",{
-            position: "top-center"
-        })
-
+        toast.success("Assignment Submitted", {
+          position: "top-center",
+        });
       });
   };
 
@@ -97,7 +95,7 @@ function ViewAssignment() {
       </div>
       <div className="flex justify-center">
         <button
-          onClick={ handleTakeAssignment } // Open the modal
+          onClick={handleTakeAssignment} // Open the modal
           className="px-4 mt-8 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none hover:shadow-lg hover:shadow-blue-300 focus:ring-2 focus:ring-blue-300"
         >
           Take Assignment

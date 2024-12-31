@@ -11,10 +11,10 @@ export default function AssignmentSubmission() {
     const mark = +form.mark.value;
     const feedback = form.feedback.value;
 
-    if(mark>marks || mark<0){
-      toast.error("Mark should be positive and less than full mark",{
-        position:"top-center"
-      })
+    if (mark > marks || mark < 0) {
+      toast.error("Mark should be positive and less than full mark", {
+        position: "top-center",
+      });
       return;
     }
 
@@ -23,9 +23,7 @@ export default function AssignmentSubmission() {
       feedback,
     };
 
-    console.log(markingInfo);
-
-    fetch(`http://localhost:5000/assignment-evaluate/${assignment._id}`, {
+    fetch(`https://study-buddy-server-nu.vercel.app/assignment-evaluate/${assignment._id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -34,7 +32,6 @@ export default function AssignmentSubmission() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount) {
           toast.success("Mark given!", {
             position: "top-center",
@@ -57,8 +54,6 @@ export default function AssignmentSubmission() {
     submission,
     notes,
   } = assignment;
-
-  console.log(assignment);
 
   return (
     <div className="my-14 w-11/12 mx-auto">

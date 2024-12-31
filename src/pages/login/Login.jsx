@@ -13,7 +13,6 @@ export default function Login() {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
 
     userLogin(email, password)
       .then(() => {
