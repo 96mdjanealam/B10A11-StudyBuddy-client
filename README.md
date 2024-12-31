@@ -1,8 +1,24 @@
-# React + Vite
+# Study Buddy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Purpose
+Study Buddy is a web application designed to streamline the process of creating assignments and evaluating them efficiently. It provides tools for educators and students to interact seamlessly in an academic setting.
 
-Currently, two official plugins are available:
+## Live URL
+[Visit Study Buddy](https://study-buddy-71834.web.app/)  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Key Features
+- **Assignment Creation**: Teachers can easily create and assign tasks to students.
+- **Submission Tracking**: Track the status of submitted assignments.
+- **Automated Grading**: Evaluate assignments automatically using predefined criteria.
+- **Collaboration Tools**: Facilitate discussions and queries related to assignments.
+- **User Roles**: Distinct dashboards for teachers and students.
+
+## npm Packages Used
+Below is a list of npm packages utilized in this project:
+
+- **react**: Building the user interface.
+- **react-router-dom**: Managing navigation and routing.
+- **axios**: Handling HTTP requests.
+- **tailwindcss**: Styling the application.
+- **react-toastify**: Displaying notifications.
+- **react-icons**: Adding icons to the UI.
